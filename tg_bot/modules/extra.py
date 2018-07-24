@@ -211,9 +211,15 @@ def toss(bot: Bot, update: Update):
 
 @run_async
 def abuse(bot: Bot, update: Update):
-    # reply to correct message
-    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
-    reply_text(random.choice(ABUSE_STRINGS))
+    msg = update.effective_message  # type: Optional[Message]
+    user=msg.from_user
+    user_id = user.id
+    if (user_id == OWNER_ID):
+        update.effective_message.reply_text("Hello, Sar :D")
+    elif (user_id in SUDO_USERS):
+        update.effective_message.reply_text("Master you pro!")
+    else:
+        update.effective_message.reply_text(random.choice(ABUSE_STRINGS))
 	
 @run_async
 def shrug(bot: Bot, update: Update):
